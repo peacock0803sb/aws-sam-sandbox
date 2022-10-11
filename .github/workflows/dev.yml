@@ -1,0 +1,26 @@
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+          cache: "pip"
+          cache-dependency-path: "**/constraints.txt"
+      - uses: aws-actions/setup-sam@v2
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+          aws-region: ap-northeast-1
+      - run: |
+          pip install -U pip setuptools
+          pip install . -c constraints.txt
+          pip freeze > requirements.txt
+      - run: sam build -t template_dev.yaml --config-env dev -m requirements.txt --use-container
+      - run: sam deploy -t template_dev.yaml --config-env dev --no-confirm-changeset --no-fail-on-empty-changeset
