@@ -1,0 +1,11 @@
+version = 1.0
+
+[dev.deploy.parameters]
+stack_name = "aws-sam-sandbox-dev"
+region = "ap-northeast-1"
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
+confirm_changeset = true
+disable_rollback = false
+s3_bucket = "sam-deploy-768515502995-takai"
+s3_prefix = "aws-sam-sandbox-dev"

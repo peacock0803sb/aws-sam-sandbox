@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Stack for aws-sam-sandbox-dev
+
+Globals:
+  Function:
+    Timeout: 5
+
+Resources:
+  AwsSamSandboxFunc:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: ""
+      CodeUri: aws_sam_sandbox/
+      FunctionName: aws-sam-sandbox-dev
+      Handler: app.lambda_hanlder
+      Runtime: python3.9
+      Environment:
+        Variables:
+          SETTINGS: "develop"
+      Timeout: 600
+      MemorySize: 512
+      Role: arn:aws:iam::768515502995:role/role-lambda-upload
+      Architectures:
+        - x86_64
+      Events:
+        AwsSamSandbox:
+          Type: Api
+          Properties:
+            Path: /
+            Method: ANY
+
+Outputs:
+  AwsSamSandboxApi:
+    Description: "An Api gateway endpoint"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+  AwsSamSandboxFunc:
+    Description: "ARN for aws-sam-sandbox-dev"
+    Value: !GetAtt AwsSamSandboxFunc.Arn
+  AwsSamSandboxIamRole:
+    Description: "Explicit IAM Role on develop "
+    Value: arn:aws:iam::768515502995:role/role-lambda-upload
