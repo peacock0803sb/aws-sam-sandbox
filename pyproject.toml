@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+
+[project]
+name = "aws-sam-sandbox"
+authors = [{name="Yoichi Takai", email="contact@peacock0803sz.com"}]
+
+dependencies = [
+  "Flask",
+  "requests",
+]
+dynamic = ["version"]
+requires-python = ">=3.9"
+urls = {homepage = "https://bitbucket.org/peacock0803sb/aws-sam-sandbox/"}  # privateでもよい
+
+[project.optional-dependencies]
+# deploy = ["aws-sam-cli"]
+dev = ["black", "flake8", "mypy", "types-requests"]
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+include = '\.pyi?$'
+exclude = '''
+
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+  )
+)
+'''
+
+[tool.mypy]
+ignore_missing_imports = 1
