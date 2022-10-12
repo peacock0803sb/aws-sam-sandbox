@@ -21,6 +21,6 @@ jobs:
       - run: |
           pip install -U pip setuptools
           pip install . -c constraints.txt
-          pip freeze > requirements.txt
+          pip freeze --exclude "aws-sam-sandbox" > requirements.txt
       - run: sam build -t template_dev.yaml --config-env dev -m requirements.txt --use-container
       - run: sam deploy -t template_dev.yaml --config-env dev --no-confirm-changeset --no-fail-on-empty-changeset
