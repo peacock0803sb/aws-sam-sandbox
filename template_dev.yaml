@@ -12,9 +12,9 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Description: ""
-      CodeUri: aws_sam_sandbox/
+      CodeUri: src/
       FunctionName: aws-sam-sandbox-dev
-      Handler: app.lambda_hanlder
+      Handler: wsgi.lambda_handler
       Runtime: python3.9
       Environment:
         Variables:
