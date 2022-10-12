@@ -1,4 +1,4 @@
-from aws_sam_sandbox import app
+from aws_sam_sandbox.initilizer import app
 
 
 @app.route("/", methods=["GET"])
