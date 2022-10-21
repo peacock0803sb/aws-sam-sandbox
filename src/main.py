@@ -18,3 +18,8 @@ def init_app(setting_name: str) -> Flask:
         app.config[json_name] = schema
         app.logger.debug("Init json-schema config: %s", setting_name)
     return app
+
+
+@app.route("/", methods=["GET"])
+def root():
+    return {"message": "Hello!"}
