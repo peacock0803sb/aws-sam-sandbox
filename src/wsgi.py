@@ -4,8 +4,7 @@ import os
 
 from flask import Flask
 
-from aws_sam_sandbox import routers  # noqa
-from aws_sam_sandbox.initilizer import init_app
+from main import init_app, root  # noqa
 
 
 def main(is_debug: bool | None = None) -> Flask:
@@ -16,8 +15,9 @@ def main(is_debug: bool | None = None) -> Flask:
     return app
 
 
-def lambda_handler(event, context) -> None:
-    main(is_debug=False)
+def lambda_handler(event, context):
+    app = main(is_debug=False)
+    return app
 
 
 if __name__ == "__main__":
