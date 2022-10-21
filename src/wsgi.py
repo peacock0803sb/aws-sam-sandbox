@@ -2,6 +2,8 @@ from __future__ import annotations
 import logging
 import os
 
+from asgiref.wsgi import WsgiToAsgi
+from mangum import Mangum
 from flask import Flask
 
 from main import init_app, root  # noqa
@@ -15,9 +17,12 @@ def main(is_debug: bool | None = None) -> Flask:
     return app
 
 
-def lambda_handler(event, context):
-    app = main(is_debug=False)
-    return app
+def to_apigateway():
+    app = WsgiToAsgi(main())
+    return Mangum(app, lifespan="off")
+
+
+handler = to_apigateway()
 
 
 if __name__ == "__main__":

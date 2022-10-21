@@ -17,7 +17,7 @@ requires-python = ">=3.9"
 urls = {homepage = "https://bitbucket.org/peacock0803sb/aws-sam-sandbox/"}  # privateでもよい
 
 [project.optional-dependencies]
-# deploy = ["aws-sam-cli"]
+sam = ["asgiref", "mangum"]
 dev = ["black", "flake8", "mypy", "types-requests"]
 
 [tool.black]
